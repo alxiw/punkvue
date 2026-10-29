@@ -2,18 +2,21 @@
   "name": "punkvue",
   "version": "1.0.0",
   "description": "Digital archive of DIY Dog beers built with Vue 3 and Vite",
+  "private": true,
+  "license": "MIT",
   "author": {
     "name": "Alexander Ivanovsky",
     "email": "alxiw@outlook.com",
     "url": "https://github.com/alxiw"
   },
-  "license": "MIT",
   "homepage": "https://punkapi.dev",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/alxiw/punkvue.git"
   },
-  "private": true,
+  "bugs": {
+    "url": "https://github.com/alxiw/punkvue/issues"
+  },
   "type": "module",
   "scripts": {
     "dev": "vite",
