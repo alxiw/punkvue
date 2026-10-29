@@ -1,0 +1,26 @@
+# Secrets: an env file must never enter the build context. The API URL arrives
+# through --build-arg / ENV instead (see Dockerfile).
+.env
+.env.*
+
+# Dependencies and build output are produced inside the image
+node_modules
+dist
+dist-ssr
+
+# VCS, editor and OS noise
+.git
+.gitignore
+.gitattributes
+.idea
+.vscode
+.DS_Store
+**/.DS_Store
+
+# Caches, type-check output and docs are not needed to build or serve the site
+coverage
+.vite
+.cache
+**/*.tsbuildinfo
+README.md
+.github

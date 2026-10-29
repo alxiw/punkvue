@@ -94,9 +94,10 @@ The app is a static SPA: everything the server needs is in `dist/`.
 
 1. `pnpm build`. `VITE_API_BASE_URL` must be available **during the build**, because the value is
    baked into the bundle: use `.env` for a local build and a repository variable / job env
-   (`VITE_API_BASE_URL`) in CI.
+   (`VITE_API_BASE_URL`) in CI. The build aborts when the variable is missing.
 2. The production server needs **no `.env` file** — it only serves the built assets.
-3. History mode (`/366` is a client-side route) needs a server fallback to `index.html`:
+3. History mode (`/366` is a client-side route) needs a server fallback to `index.html`; the
+   bundled `nginx.conf` already does this. For any other server:
 
    ```nginx
    location / {
@@ -106,6 +107,23 @@ The app is a static SPA: everything the server needs is in `dist/`.
 
 4. Serving under a sub-path requires Vite's `base`; the router already reads it through
    `import.meta.env.BASE_URL`.
+
+### Docker
+
+```bash
+docker build --build-arg VITE_API_BASE_URL=https://punkapi.dev/v3 -t punkvue .
+docker run --rm -p 8080:80 punkvue   # http://localhost:8080
+```
+
+- The image is multi-stage: `node:24-alpine` type-checks and bundles the app, `nginx:stable-alpine`
+  serves `dist/` (~93 MB in total).
+- `--build-arg` is mandatory, not optional: the URL is inlined into the bundle, so `-e` or
+  `.env` at runtime has no effect, and the Docker build fails at `pnpm build` without the argument.
+- `.dockerignore` keeps `.env*`, `node_modules`, `dist`, `.git` and OS files out of the build
+  context, so the API URL never leaks into an image layer.
+- `nginx.conf` provides the history fallback, one year of caching for content-hashed `/assets/`,
+  30 days for icons and the manifest (served as `application/manifest+json`), `no-cache` for
+  `index.html`, gzip and the basic security headers.
 
 ## License
 
