@@ -15,7 +15,7 @@ export default defineConfig(({ command, mode }) => {
   if (command === "build" && !env.VITE_API_BASE_URL) {
     throw new Error(
       "VITE_API_BASE_URL is not set: copy .env.example to .env, or pass it as an " +
-        "environment variable (docker build --build-arg VITE_API_BASE_URL=https://punkapi.dev/v3)",
+        "environment variable (docker build --build-arg VITE_API_BASE_URL=https://punkapi.dev/api/v3)",
     )
   }
 

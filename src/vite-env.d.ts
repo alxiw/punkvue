@@ -10,7 +10,7 @@ interface ViteTypeOptions {
 }
 
 interface ImportMetaEnv {
-  /** API base URL, e.g. https://punkapi.dev/v3 */
+  /** API base URL, e.g. https://punkapi.dev/api/v3 */
   readonly VITE_API_BASE_URL: string
   /** App base path from the Vite config (`base`), e.g. `/` */
   readonly BASE_URL: string

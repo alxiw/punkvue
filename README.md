@@ -1,7 +1,7 @@
 # PunkVue
 
 A frontend for [PunkAPI](https://github.com/alxiw/punkapi) — a browsable digital archive of brewing recipes for
-all 415 beers of BrewDog's DIY Dog V8.
+all 415 beers of BrewDog's DIY Dog v8.
 
 ### 🔗 [punkapi.dev](https://punkapi.dev/)
 
@@ -42,9 +42,9 @@ pnpm dev               # http://localhost:5173
 
 | Variable            | Required | Description                                     |
 | ------------------- | -------- | ----------------------------------------------- |
-| `VITE_API_BASE_URL` | yes      | PunkAPI base URL, e.g. `https://punkapi.dev/v3` |
+| `VITE_API_BASE_URL` | yes      | PunkAPI base URL, e.g. `https://punkapi.dev/api/v3` |
 
-Trailing slashes in `VITE_API_BASE_URL` are stripped, so `/v3` and `/v3/` are equivalent.
+Trailing slashes in `VITE_API_BASE_URL` are stripped, so `/api/v3` and `/api/v3/` are equivalent.
 
 Notes:
 
@@ -111,7 +111,7 @@ The app is a static SPA: everything the server needs is in `dist/`.
 ### Docker
 
 ```bash
-docker build --build-arg VITE_API_BASE_URL=https://punkapi.dev/v3 -t punkvue .
+docker build --build-arg VITE_API_BASE_URL=https://punkapi.dev/api/v3 -t punkvue .
 docker run --rm -p 8080:80 punkvue   # http://localhost:8080
 ```
 
