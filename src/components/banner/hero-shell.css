@@ -1,0 +1,184 @@
+/*
+ * Shared shell for hero states: copy, headers, metrics, image, etc.
+ * Imported via <style scoped src> in BeerBannerContent, BeerBannerError,
+ * and BeerBannerSkeleton, compiling per each component's scope-id.
+ *
+ * RerollButton encapsulates its own styles. BeerBanner orchestrator does not
+ * import this shell, needing only .hero-pending's height.
+ */
+
+/*
+ * Internal hero grid: copy on the left, bottle on the right.
+ * A dedicated root switches skeleton, error, and content in a single layer.
+ *
+ * Recreated via v-if on state changes, so entry animation runs directly on
+ * .hero-layout (old state unmounts immediately without height drops before the new one is mounted).
+ */
+.hero-layout {
+  min-height: inherit;
+  display: grid;
+  grid-template-columns: 1.25fr 0.75fr;
+  animation: hero-fade-in 200ms ease both;
+}
+
+.hero-copy {
+  padding: clamp(34px, 5vw, 72px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding-bottom: 1em;
+  font: 500 11px/1.3 'DM Mono', monospace;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.live-dot {
+  width: 7px;
+  height: 7px;
+  flex: 0 0 7px;
+  border-radius: 100%;
+  background: var(--primary-foreground);
+  box-shadow: 0 0 0 4px color-mix(in oklab, var(--primary-foreground) 16%, transparent);
+}
+
+/*
+ * Beer title: scoped under .hero-copy rather than .hero, since .hero belongs
+ * to the parent BeerBanner and outside this component's scope-id.
+ */
+.hero-copy h1 {
+  max-width: 840px;
+  font: 400 clamp(70px, 10vw, 148px)/0.76 'Instrument Serif', serif;
+  letter-spacing: -0.055em;
+  /*
+   * Poster line-height (< 1) causes descenders (g, y) to drop ~0.27em below the box.
+   * Padding in em scales with font-size, preventing overlaps on hero-bottom.
+   */
+  padding-bottom: 0.28em;
+}
+
+.hero-tagline {
+  margin-bottom: 16px;
+  font: 400 clamp(18px, 2vw, 27px)/1 'Instrument Serif', serif;
+  font-style: italic;
+  padding-bottom: 0.4em;
+}
+
+.hero-bottom {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 32px;
+}
+
+.hero-metrics {
+  display: flex;
+  gap: 34px;
+}
+
+.metric {
+  display: flex;
+  flex-direction: column;
+  /* Centers content; keeps .metric-value flex items from stretching to the edge */
+  align-items: center;
+  gap: 6px;
+  text-align: center;
+}
+
+.metric span {
+  font: 500 10px/1 'DM Mono', monospace;
+  letter-spacing: 0.08em;
+  /* Compensates for trailing letter-spacing to ensure true centering */
+  padding-left: 0.08em;
+}
+
+.metric strong {
+  font: 400 27px/1 'Instrument Serif', serif;
+}
+
+.hero-image {
+  position: relative;
+  /* Height is determined by the copy column; image fits without stretching the grid */
+  min-height: 0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: var(--primary);
+}
+
+/* Bottle skeleton shares image layer and fades out after load */
+.hero-image .sk--bottle {
+  position: relative;
+  z-index: 1;
+  transition: opacity 320ms ease;
+}
+
+.hero-image.is-loaded .sk--bottle {
+  opacity: 0;
+  animation: none;
+}
+
+@keyframes hero-fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (max-width: 900px) {
+  .hero-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-copy {
+    min-height: 500px;
+    /* Stack elements with consistent spacing */
+    justify-content: flex-start;
+    gap: 26px;
+  }
+
+  /* Pins metrics to the bottom even with multi-line titles */
+  .hero-bottom {
+    margin-top: auto;
+  }
+
+  .hero-image {
+    height: 360px;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero-copy {
+    min-height: 430px;
+    padding: 28px 24px;
+  }
+
+  .hero-copy h1 {
+    font-size: clamp(52px, 19vw, 86px);
+    /* Slightly looser leading for 3-4 line titles */
+    line-height: 0.84;
+  }
+
+  .hero-bottom {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .hero-image {
+    height: 300px;
+  }
+}
+
+/*
+ * .hero-layout uses a scoped selector ([data-v-…]), which overrides global styles.
+ * Motion reduction is handled here in the same scope.
+ */
+@media (prefers-reduced-motion: reduce) {
+  .hero-layout {
+    animation: none;
+  }
+}

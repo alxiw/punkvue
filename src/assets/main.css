@@ -1,0 +1,194 @@
+/*
+ * Design system semantic token palette. All components map to these variables:
+ * - background/foreground          — page background and base text;
+ * - card/popover                   — card and popover surfaces;
+ * - primary/primary-foreground     — primary accent (hero, row hover, active buttons);
+ * - secondary/secondary-foreground — secondary surfaces and navigation states;
+ * - accent/accent-foreground       — state highlights (badges, counters);
+ * - muted/muted-foreground         — muted surfaces and secondary text;
+ * - border/input/ring              — dividers, field borders, and focus rings;
+ * - destructive                    — error states and destructive actions.
+ */
+:root {
+  color-scheme: light;
+  --background: oklch(0.98 0.008 220);
+  --foreground: oklch(0.27 0.04 230);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.27 0.04 230);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.27 0.04 230);
+  /* #00AFDB */
+  --primary: oklch(0.69 0.13 220);
+  --primary-foreground: oklch(0.2 0.05 235);
+  /* #007FA9 */
+  --secondary: oklch(0.56 0.1 230);
+  --secondary-foreground: oklch(0.99 0.01 220);
+  --muted: oklch(0.95 0.012 220);
+  --muted-foreground: oklch(0.5 0.03 230);
+  /* #3DDC84 */
+  --accent: oklch(0.8 0.17 155);
+  --accent-foreground: oklch(0.27 0.06 160);
+  /* #EB5947 */
+  --destructive: oklch(0.64 0.19 28);
+  --border: oklch(0.9 0.015 220);
+  --input: oklch(0.9 0.015 220);
+  --ring: oklch(0.69 0.13 220);
+}
+
+/*
+ * Dark theme activates automatically based on system/browser preferences.
+ * Leverages @media over an <html> class to enable instant, zero-JS switching
+ * independent of Vue mounting or page reloads.
+ */
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --background: oklch(0.2 0.03 235);
+    --foreground: oklch(0.95 0.015 220);
+    --card: oklch(0.25 0.035 235);
+    --card-foreground: oklch(0.95 0.015 220);
+    --popover: oklch(0.25 0.035 235);
+    --popover-foreground: oklch(0.95 0.015 220);
+    /* #1EBDE3 */
+    --primary: oklch(0.74 0.13 220);
+    --primary-foreground: oklch(0.2 0.05 235);
+    /* #1B6C8C */
+    --secondary: oklch(0.5 0.09 230);
+    --secondary-foreground: oklch(0.97 0.01 220);
+    --muted: oklch(0.3 0.03 235);
+    --muted-foreground: oklch(0.72 0.03 220);
+    /* #41D686 */
+    --accent: oklch(0.78 0.17 155);
+    --accent-foreground: oklch(0.22 0.06 160);
+    /* #F75E51 */
+    --destructive: oklch(0.68 0.19 28);
+    --border: oklch(1 0 0 / 12%);
+    --input: oklch(1 0 0 / 15%);
+    --ring: oklch(0.74 0.13 220);
+  }
+}
+
+/* Page baseline styles */
+html {
+  font-family: 'DM Sans', sans-serif;
+  scroll-behavior: smooth;
+}
+
+body {
+  min-width: 320px;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: 'DM Sans', sans-serif;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 3px;
+}
+
+/* Screen-reader only text: accessible without taking up screen space */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/*
+ * Global primitives: skeleton loaders and the shared EBC dot shape.
+ * Defined globally for reuse across hero, catalog, and recipe components.
+ */
+
+@keyframes skeleton-wave {
+  to {
+    background-position: -200% 0;
+  }
+}
+
+/*
+ * Skeleton blocks use --primary-foreground: positioned over --primary
+ * container backgrounds, ensuring seamless auto-adaptation across themes.
+ */
+.sk {
+  display: block;
+  border-radius: 2px;
+  background: linear-gradient(
+          90deg,
+          color-mix(in oklab, var(--primary-foreground) 14%, transparent) 25%,
+          color-mix(in oklab, var(--primary-foreground) 7%, transparent) 50%,
+          color-mix(in oklab, var(--primary-foreground) 14%, transparent) 75%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-wave 1.4s linear infinite;
+}
+
+/*
+ * List row skeletons. Color is derived from row dividers:
+ * against the near-white surface, the darker navy tone of .sk would look muddy.
+ */
+.sk-row {
+  display: block;
+  border-radius: 2px;
+  background: linear-gradient(
+          90deg,
+          var(--border) 25%,
+          color-mix(in oklab, var(--border) 45%, var(--background)) 50%,
+          var(--border) 75%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-wave 1.4s linear infinite;
+}
+
+/*
+ * Skeletons match the Punk API 271×1058 bottle ratio;
+ * live assets preserve their aspect ratio via object-fit: contain.
+ */
+.sk--bottle,
+.sk-row--bottle {
+  aspect-ratio: 271 / 1058;
+}
+
+.sk--bottle {
+  width: auto;
+  height: 68%;
+}
+
+/* Row bottle skeleton: fixed height, width resolved by aspect-ratio */
+.sk-row--bottle {
+  width: auto;
+  height: 94px;
+}
+
+/*
+ * Shared EBC dot shape. Used alongside component-specific sizing classes
+ * (hero-ebc-dot, beer-ebc-dot, beer-stat__ebc-dot). Color is injected
+ * inline via getEbcColor; this rule defines only the border and radius.
+ */
+.ebc-dot {
+  /* currentColor делает рамку контрастной и на светлом, и на тёмном фоне */
+  border: 1px solid color-mix(in oklab, currentColor 25%, transparent);
+  border-radius: 50%;
+}
+
+/* Hero animation disabled at component level: scoped selector overrides global rule */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .sk,
+  .sk-row {
+    animation: none;
+  }
+}

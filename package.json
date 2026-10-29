@@ -1,0 +1,42 @@
+{
+  "name": "punkvue",
+  "version": "1.0.0",
+  "description": "Digital archive of DIY Dog beers built with Vue 3 and Vite",
+  "author": {
+    "name": "Alexander Ivanovsky",
+    "email": "alxiw@outlook.com",
+    "url": "https://github.com/alxiw"
+  },
+  "license": "MIT",
+  "homepage": "https://punkapi.dev",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alxiw/punkvue.git"
+  },
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc -b && vite build",
+    "type-check": "vue-tsc -b",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@lucide/vue": "^1.61.0",
+    "axios": "^1.20.0",
+    "radix-vue": "^1.9.3",
+    "vue": "^3.4.38",
+    "vue-router": "^4.6.4"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@vitejs/plugin-vue": "^6.0.7",
+    "typescript": "^5.5.4",
+    "vite": "^8.3.5",
+    "vite-plugin-vue-devtools": "^8.1.5",
+    "vitest": "^5.0.5",
+    "vue-tsc": "^2.0.29"
+  }
+}

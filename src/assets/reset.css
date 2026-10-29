@@ -1,0 +1,193 @@
+/*
+ * Base browser stylesheet reset: ensures consistent baseline across components.
+ * Imported first in main.ts so that app and page styles can override it.
+ * Contains only what is required by the project layout: form controls (including
+ * number and date inputs), media elements, lists, and typography.
+ */
+
+/* Unified box model: padding and borders do not expand element dimensions */
+*,
+::before,
+::after,
+::backdrop,
+::file-selector-button {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border: 0 solid;
+}
+
+/*
+ * 1. Consistent line height across the entire document.
+ * 2. Prevent font scaling adjustments after orientation change in iOS.
+ * 3. Legible default tab size.
+ * 4. Disable tap highlight overlay on iOS.
+ */
+html,
+:host {
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+  tab-size: 4;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Headings inherit font-size and font-weight from page typography */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+/* Links rely on explicit styles rather than browser defaults */
+a {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+b,
+strong {
+  font-weight: bolder;
+}
+
+small {
+  font-size: 80%;
+}
+
+sub,
+sup {
+  position: relative;
+  font-size: 75%;
+  line-height: 0;
+  vertical-align: baseline;
+}
+
+sub {
+  bottom: -0.25em;
+}
+
+sup {
+  top: -0.5em;
+}
+
+/* Unstyled lists: list markers are defined within specific components */
+ol,
+ul,
+menu {
+  list-style: none;
+}
+
+/*
+ * 1. Block-level replaced elements: eliminates baseline descender gap under icons and images.
+ * 2. Vertical alignment centered with adjacent inline text.
+ */
+img,
+svg,
+video,
+canvas,
+audio,
+iframe,
+embed,
+object {
+  display: block;
+  vertical-align: middle;
+}
+
+/* Responsive media: constrained to container bounds while preserving aspect ratio */
+img,
+video {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Form controls inherit typography, metrics, and text color */
+button,
+input,
+select,
+optgroup,
+textarea,
+::file-selector-button {
+  font: inherit;
+  font-feature-settings: inherit;
+  font-variation-settings: inherit;
+  letter-spacing: inherit;
+  color: inherit;
+  border-radius: 0;
+  background-color: transparent;
+  opacity: 1;
+}
+
+/* Consistent button appearance across iOS Safari */
+button,
+input:where([type='button'], [type='reset'], [type='submit']),
+::file-selector-button {
+  appearance: button;
+}
+
+/* Consistent placeholder opacity across all browsers */
+::placeholder {
+  opacity: 1;
+}
+
+/*
+ * Placeholder color defaults to translucent currentColor;
+ * legacy Safari breaks if color-mix evaluates unconditionally
+ */
+@supports (not (-webkit-appearance: -apple-pay-button)) or (contain-intrinsic-size: 1px) {
+  ::placeholder {
+    color: color-mix(in oklab, currentcolor 50%, transparent);
+  }
+}
+
+textarea {
+  resize: vertical;
+}
+
+/* Date inputs: consistent height and alignment in Safari and iOS */
+::-webkit-date-and-time-value {
+  min-height: 1lh;
+  text-align: inherit;
+}
+
+::-webkit-datetime-edit {
+  display: inline-flex;
+}
+
+::-webkit-datetime-edit-fields-wrapper {
+  padding: 0;
+}
+
+::-webkit-datetime-edit,
+::-webkit-datetime-edit-year-field,
+::-webkit-datetime-edit-month-field,
+::-webkit-datetime-edit-day-field,
+::-webkit-datetime-edit-hour-field,
+::-webkit-datetime-edit-minute-field,
+::-webkit-datetime-edit-second-field,
+::-webkit-datetime-edit-millisecond-field,
+::-webkit-datetime-edit-meridiem-field {
+  padding-block: 0;
+}
+
+::-webkit-calendar-picker-indicator {
+  line-height: 1;
+}
+
+/* Prevent number input spin buttons from stretching to full field height in Safari */
+::-webkit-inner-spin-button,
+::-webkit-outer-spin-button {
+  height: auto;
+}
+
+/* Prevent Firefox from displaying a default invalid outline/shadow */
+:-moz-ui-invalid {
+  box-shadow: none;
+}
+
+/* Elements with the hidden attribute remain completely hidden unless until-found is specified */
+[hidden]:where(:not([hidden='until-found'])) {
+  display: none !important;
+}

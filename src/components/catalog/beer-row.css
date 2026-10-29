@@ -1,0 +1,62 @@
+/*
+ * Shared list row layout. Imported via <style scoped src>
+ * in BeerItem, BeerItemSkeleton, and BeerCatalog,
+ * so rules compile under each component's scope-id.
+ *
+ * .beer-list__header belongs to the beer-list block in BeerCatalog:
+ * placed here to keep header columns in sync with row columns.
+ */
+.beer-list__header,
+.beer-row,
+.beer-skeleton {
+  display: grid;
+  grid-template-columns: minmax(430px, 2fr) repeat(3, minmax(64px, 0.45fr)) minmax(105px, 0.7fr) 34px;
+  align-items: center;
+  column-gap: 22px;
+}
+
+.beer-name-cell {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.beer-name-text {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.beer-image {
+  position: relative;
+  width: 64px;
+  height: 94px;
+  flex: 0 0 64px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+.row-arrow {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/*
+ * 1000px rather than 900px: the 6-column grid minimum is 871px
+ * (430 + 192 + 105 + 34 + 5×22), and <main> occupies 90vw (0.9 of viewport).
+ * Consequently, the table layout overflows around ~968px viewport width
+ * (~985px with a classic scrollbar).
+ */
+@media (max-width: 1000px) {
+  .beer-row,
+  .beer-skeleton {
+    grid-template-columns: 1fr 30px;
+    gap: 16px;
+  }
+
+  .row-arrow {
+    grid-column: 2;
+    grid-row: 1;
+  }
+}
