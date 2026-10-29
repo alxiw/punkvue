@@ -19,7 +19,7 @@ COPY . .
 # VITE_API_BASE_URL is inlined into the bundle at build time, so it has to be set
 # right here — a runtime .env on the server would have no effect. The build aborts
 # when it is missing (see vite.config.ts).
-ARG VITE_API_BASE_URL
+ARG VITE_API_BASE_URL=/api/v3
 ENV VITE_API_BASE_URL=${VITE_API_BASE_URL}
 
 RUN pnpm build
