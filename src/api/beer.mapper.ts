@@ -7,7 +7,7 @@ function toImageUrl(image: string | null): string {
   return image ? `${API_BASE_URL}/images/${image}` : ""
 }
 
-function toAbvText(value: number | null): string {
+function toPercentageOrDefault(value: number | null): string {
   return value != null ? `${value}%` : ""
 }
 
@@ -100,14 +100,14 @@ export function mapApiBeerToInternal(apiBeer: BeerDto): Beer {
     firstBrewed: apiBeer.first_brewed,
     description: apiBeer.description,
     imageUrl: toImageUrl(apiBeer.image),
-    abv: toAbvText(apiBeer.abv),
+    abv: toPercentageOrDefault(apiBeer.abv),
     ibu: toStringOrDefault(apiBeer.ibu),
     targetOg: toStringOrDefault(apiBeer.target_og),
     targetFg: toStringOrDefault(apiBeer.target_fg),
     ebc: toStringOrDefault(apiBeer.ebc),
     srm: toStringOrDefault(apiBeer.srm),
     ph: toStringOrDefault(apiBeer.ph),
-    attenuationLevel: toStringOrDefault(apiBeer.attenuation_level),
+    attenuationLevel: toPercentageOrDefault(apiBeer.attenuation_level),
     volume: toMeasureText(apiBeer.volume),
     boilVolume: toMeasureText(apiBeer.boil_volume),
     method: mapMethod(apiBeer.method),
